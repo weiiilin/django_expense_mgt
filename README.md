@@ -1,6 +1,6 @@
  成果動態展示
  ===
-<video src="./image/demo.mp4" controls width="100%"></video>
+[<video src="./image/demo.mp4" controls width="100%"></video>](https://github.com/user-attachments/assets/6ec37962-a8b6-4ddb-b1f2-08a6575d2ad6)
 
 基本功能
 ---
