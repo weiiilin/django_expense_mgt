@@ -1,5 +1,8 @@
  成果動態展示
  ===
+ - 第二次作業
+[<video src="./image/homework2.mp4" controls width="100%"></video>](https://github.com/weiiilin/django_expense_mgt/issues/2#issue-4524947576)
+ - 第一次作業
 [<video src="./image/demo.mp4" controls width="100%"></video>](https://github.com/user-attachments/assets/6ec37962-a8b6-4ddb-b1f2-08a6575d2ad6)
 
 基本功能
