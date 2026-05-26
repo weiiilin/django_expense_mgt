@@ -1,7 +1,11 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 class ExpenseRecord(models.Model):
+    # 關聯到 User 模型，表示這筆消費記錄屬於哪個使用者
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='expenses')
+
     # 1. 實際消費日期 (讓使用者可以選擇哪一天消費)
     # 預設值設為 timezone.now，確保沒選日期時也會抓今天
     date = models.DateField(default=timezone.now)
@@ -10,7 +14,7 @@ class ExpenseRecord(models.Model):
     category = models.CharField(max_length=50)
     
     # 3. 金額
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    amount = models.IntegerField()
     
     # 4. 備註
     description = models.CharField(max_length=200, blank=True)
