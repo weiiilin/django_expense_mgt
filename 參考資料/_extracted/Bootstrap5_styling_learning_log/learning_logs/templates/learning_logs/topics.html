@@ -1,0 +1,26 @@
+{% extends 'learning_logs/base.html' %}
+
+<!-- 顯示頁面標題 -->
+{% block page_header %}
+  <h1>Topics</h1>
+{% endblock page_header %}
+
+{% block content %}
+
+  <!-- 使用 for 迴圈渲染主題列表 -->
+  <ul class="list-group border-bottom pb-2 mb-4">
+    {% for topic in topics %}
+      <li class="list-group-item border-0">
+        <!-- 使用 named URL + 參數生成連結，避免硬編碼路徑 -->
+        <a href="{% url 'learning_logs:topic' topic.id %}">
+          {{ topic.text }}</a>
+      </li>
+    {% empty %}
+      <!-- 沒資料時顯示替代訊息 -->
+      <li class="list-group-item border-0">No topics have been added yet.</li>
+    {% endfor %}
+  </ul>
+
+  <a href="{% url 'learning_logs:new_topic' %}">Add a new topic</a>
+
+{% endblock content %}

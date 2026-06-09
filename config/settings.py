@@ -10,7 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
+
+try:
+    import pymysql
+
+    pymysql.install_as_MySQLdb()
+except ImportError:
+    pymysql = None
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +28,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-4t@jbb&00atb49mdnu#izg5rks5+x7ii74mloe*uy4tr0=i281'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-4t@jbb&00atb49mdnu#izg5rks5+x7ii74mloe*uy4tr0=i281')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', '1') == '1'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,0.0.0.0').split(',')
+    if host.strip()
+]
 
 
 # Application definition
@@ -37,12 +49,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',  # 之後要做 API 會用到
-    'expense_mgt',     # 您的記帳 App
+    'rest_framework',
+    'expense_mgt',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -81,6 +94,21 @@ DATABASES = {
     }
 }
 
+if os.getenv('MYSQL_DATABASE'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.getenv('MYSQL_DATABASE', 'expense_mgt'),
+            'USER': os.getenv('MYSQL_USER', 'expense_user'),
+            'PASSWORD': os.getenv('MYSQL_PASSWORD', 'expense_password'),
+            'HOST': os.getenv('MYSQL_HOST', 'db'),
+            'PORT': os.getenv('MYSQL_PORT', '3306'),
+            'OPTIONS': {
+                'charset': 'utf8mb4',
+            },
+        }
+    }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -110,7 +138,25 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STORAGES = {
+    'staticfiles': {
+        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+    },
+}
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
 
 # 登入成功後跳轉到首頁
 LOGIN_REDIRECT_URL = '/'

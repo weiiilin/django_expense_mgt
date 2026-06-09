@@ -15,10 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include # 記得 import include
+from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # 加入這一行，把空字串（首頁）指向 expense_mgt 的 urls
-    path('', include('expense_mgt.urls')), 
+    path('', include('expense_mgt.urls')),
+    path('api/', include('expense_mgt.api_urls')),
 ]

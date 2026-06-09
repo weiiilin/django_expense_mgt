@@ -1,0 +1,19 @@
+<!-- 透過 extends 繼承共用版型，避免重複 HTML 結構 -->
+{% extends 'learning_logs/base.html' %}
+
+<!-- 對應 base.html 的 page_header 區塊 -->
+{% block page_header %}
+  <div class="p-3 mb-4 bg-light border rounded-3">
+    <div class="container-fluid py-4">
+      <h1 class="display-3">Track your learning.</h1>
+      
+      <p class="lead">Make your own Learning Log, and keep a list of the
+      topics you're learning about. Whenever you learn something new
+      about a topic, make an entry summarizing what you've learned.</p>
+
+      <!-- call-to-action：引導未註冊使用者建立帳號 -->
+      <a class="btn btn-primary btn-lg mt-1"
+          href="{% url 'accounts:register' %}">Register &raquo;</a>
+    </div>
+  </div>
+{% endblock page_header %}

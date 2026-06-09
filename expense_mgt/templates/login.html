@@ -1,119 +1,39 @@
-<head>
-    <style>
-        
-/* 1. 全螢幕背景一體化 */
-html, body {
-    height: 100%;
-    margin: 0;
-    background-color: #121212 !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+{% extends 'base.html' %}
 
-/* 2. 移除卡片邊框，內容寬度稍微加大以容納長句子 */
-.card {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    width: 100%;
-    max-width: 450px; /* 寬度稍微放寬，讓提示文字不擁擠 */
-    padding: 0 !important;
-}
+{% block title %}Expense MGT | 登入{% endblock %}
 
-/* 讓所有輸入框（不論有沒有 class）都變成透明底線 */
-input[type="text"], 
-input[type="password"], 
-.form-control {
-    background: transparent !important;
-    border: none !important;
-    border-bottom: 2px solid #444 !important; /* 底線色 */
-    border-radius: 0 !important;
-    color: #fff !important;
-    width: 100% !important;
-    padding: 10px 0 !important;
-    margin-top: 5px;
-    outline: none !important;
-}
-
-/* 點擊時底線變藍色 */
-input:focus, .form-control:focus {
-    border-bottom-color: #0d6efd !important;
-    box-shadow: none !important;
-}
-
-/* 3. 標題與一般段落 */
-h2.text-primary {
-    font-size: 2.2rem;
-    text-align: center;
-    margin-bottom: 2rem !important;
-}
-
-/* 4. 重點：將表單內的段落改為「置中容器，內部靠左」 */
-form p {
-    text-align: left; /* 文字靠左 */
-    display: block;
-    width: 80%;       /* 寬度佔卡片的 80% */
-    margin: 0 auto 20px auto !important; /* 讓這 80% 的區塊在中央 */
-    color: #e0e0e0;   /* 字體顏色加亮 */
-    font-size: 1.1rem; /* 字體放大 */
-}
-
-/* 5. 密碼規則列表 (Django 自動生成的 ul) */
-form ul.helptext, 
-form .helptext {
-    text-align: left;
-    width: 80%;
-    margin: 10px auto 20px auto !important;
-    color: #aaa;      /* 規則顏色稍微調淡，區分標題 */
-    font-size: 0.95rem; /* 規則字體適中 */
-    list-style-position: inside;
-    padding-left: 0;
-}
-
-/* 6. 輸入框美化：保持簡約底線 */
-.form-control {
-    background: transparent !important;
-    border: none !important;
-    border-bottom: 2px solid #444 !important;
-    border-radius: 0 !important;
-    color: #fff !important;
-    padding: 10px 0 !important;
-    font-size: 1.1rem;
-    text-align: left; /* 輸入時文字靠左比較自然 */
-}
-
-.form-control:focus {
-    box-shadow: none !important;
-    border-bottom-color: #0d6efd !important;
-}
-
-/* 7. 按鈕置中 */
-.btn-primary {
-    display: block;
-    width: 80% !important;
-    margin: 2rem auto 0 auto !important;
-    border-radius: 50px !important;
-    padding: 12px !important;
-}
-/* 讓按鈕置中的關鍵 CSS */
-.mt-3 {
-    text-align: center;
-    width: 100%;
-}
-    </style>
-</head>
-
-<body class="container py-5" style="background-color: #121212; color: white;">
-    <div class="card bg-dark border-secondary p-4 mx-auto" style="max-width: 400px;">
-        <h2 class="text-primary mb-4">歡迎回來</h2>
-        <form method="post">
-            {% csrf_token %}
-            <p>帳號: <input type="text" name="username" class="form-control"></p>
-            <p>密碼: <input type="password" name="password" class="form-control"></p>
-            <button type="submit" class="btn btn-primary w-100">登入</button>
-        </form>
-        <p class="mt-3">還沒開戶？ <a href="{% url 'expense_mgt:register' %}">點我註冊</a></p>
+{% block content %}
+<div class="row justify-content-center py-5">
+    <div class="col-lg-5 col-md-7">
+        <div class="glass-panel rounded-4 p-4 p-lg-5">
+            <div class="mb-4 text-center">
+                <p class="text-uppercase text-secondary small mb-1">Welcome back</p>
+                <h1 class="h2 fw-bold mb-2">登入你的記帳空間</h1>
+                <p class="text-secondary mb-0">使用 Bootstrap 5 重新整理後的登入頁面。</p>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                {% endif %}
+                <div class="mb-3">
+                    <label class="form-label">帳號</label>
+                    {{ form.username }}
+                    <div class="text-danger small">{{ form.username.errors }}</div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">密碼</label>
+                    {{ form.password }}
+                    <div class="text-danger small">{{ form.password.errors }}</div>
+                </div>
+                <button type="submit" class="btn btn-accent btn-lg w-100">登入</button>
+            </form>
+            <div class="text-center mt-4">
+                <span class="text-secondary">還沒有帳號？</span>
+                <a href="{% url 'expense_mgt:register' %}" class="link-info text-decoration-none">前往註冊</a>
+            </div>
+        </div>
     </div>
-</body>
+</div>
+{% endblock %}
 
