@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-Hant" data-bs-theme="dark">
+<html lang="zh-Hant" data-bs-theme="dark" data-bg-theme="deep">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,10 +8,50 @@
   <style>
     :root {
       --page-bg: #0d1117;
+      --nav-bg: rgba(3, 7, 18, 0.82);
       --panel-bg: rgba(20, 26, 35, 0.88);
       --border-soft: rgba(255, 255, 255, 0.12);
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --input-bg: rgba(13, 17, 23, 0.78);
+      --input-text: #f8fafc;
+      --input-border: rgba(255, 255, 255, 0.14);
+      --table-head: #94a3b8;
+      --table-border: rgba(255, 255, 255, 0.08);
       --accent: #2dd4bf;
       --accent-strong: #f59e0b;
+      --body-gradient-start: #101624;
+      --body-gradient-end: #0d1117;
+    }
+
+    html[data-bg-theme="light"] {
+      --nav-bg: rgba(255, 255, 255, 0.82);
+      --panel-bg: rgba(255, 255, 255, 0.88);
+      --border-soft: rgba(15, 23, 42, 0.10);
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --input-bg: rgba(255, 255, 255, 0.96);
+      --input-text: #111827;
+      --input-border: rgba(15, 23, 42, 0.14);
+      --table-head: #475569;
+      --table-border: rgba(15, 23, 42, 0.10);
+      --body-gradient-start: #f8fafc;
+      --body-gradient-end: #eef2ff;
+    }
+
+    html[data-bs-theme="light"] {
+      --nav-bg: rgba(255, 255, 255, 0.82);
+      --panel-bg: rgba(255, 255, 255, 0.88);
+      --border-soft: rgba(15, 23, 42, 0.10);
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --input-bg: rgba(255, 255, 255, 0.96);
+      --input-text: #111827;
+      --input-border: rgba(15, 23, 42, 0.14);
+      --table-head: #475569;
+      --table-border: rgba(15, 23, 42, 0.10);
+      --body-gradient-start: #f8fafc;
+      --body-gradient-end: #eef2ff;
     }
 
     body {
@@ -19,8 +59,8 @@
       background:
         radial-gradient(circle at top left, rgba(45, 212, 191, 0.12), transparent 28%),
         radial-gradient(circle at top right, rgba(245, 158, 11, 0.10), transparent 32%),
-        linear-gradient(180deg, #101624 0%, #0d1117 100%);
-      color: #e5e7eb;
+        linear-gradient(180deg, var(--body-gradient-start) 0%, var(--body-gradient-end) 100%);
+      color: var(--text-main);
       font-family: Inter, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
     }
 
@@ -47,10 +87,19 @@
       color: var(--accent-strong) !important;
     }
 
-    .form-control, .form-select, .form-control:focus, .form-select:focus {
-      background-color: rgba(13, 17, 23, 0.78) !important;
-      border-color: rgba(255, 255, 255, 0.14) !important;
-      color: #f8fafc !important;
+    .text-secondary,
+    .navbar .text-secondary,
+    .form-text {
+      color: var(--text-muted) !important;
+    }
+
+    .form-control,
+    .form-select,
+    .form-control:focus,
+    .form-select:focus {
+      background-color: var(--input-bg) !important;
+      border-color: var(--input-border) !important;
+      color: var(--input-text) !important;
     }
 
     .form-control:focus, .form-select:focus {
@@ -59,12 +108,12 @@
     }
 
     .table thead th {
-      color: #94a3b8;
-      border-bottom-color: rgba(255, 255, 255, 0.12);
+      color: var(--table-head);
+      border-bottom-color: var(--table-border);
     }
 
     .table tbody tr {
-      border-color: rgba(255, 255, 255, 0.08);
+      border-color: var(--table-border);
     }
 
     .btn-accent {
@@ -83,11 +132,44 @@
       background: rgba(255, 255, 255, 0.08);
       color: #fff;
     }
+
+    html[data-bg-theme="light"] .btn-outline-soft {
+      color: #111827;
+      border-color: rgba(15, 23, 42, 0.16);
+    }
+
+    html[data-bg-theme="light"] .btn-outline-soft:hover {
+      background: rgba(15, 23, 42, 0.06);
+      color: #111827;
+    }
+
+    html[data-bg-theme="light"] .navbar-nav .nav-link {
+      color: #334155;
+    }
+
+    html[data-bg-theme="light"] .navbar-nav .nav-link:hover {
+      color: #111827;
+    }
+
+    html[data-bg-theme="light"] .table {
+      color: #111827;
+    }
+
+    html[data-bg-theme="light"] .badge.text-bg-dark {
+      background-color: rgba(15, 23, 42, 0.08) !important;
+      color: #0f172a !important;
+    }
+
+    html[data-bg-theme="light"] .glass-panel .text-secondary,
+    html[data-bg-theme="light"] .glass-panel .form-text,
+    html[data-bg-theme="light"] .glass-panel .text-muted {
+      color: #64748b !important;
+    }
   </style>
   {% block extra_head %}{% endblock %}
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark border-bottom" style="border-color: rgba(255,255,255,0.08)!important; background: rgba(3, 7, 18, 0.82); backdrop-filter: blur(12px);">
+  <nav class="navbar navbar-expand-lg navbar-dark border-bottom" style="border-color: rgba(255,255,255,0.08)!important; background: var(--nav-bg); backdrop-filter: blur(12px);">
     <div class="container app-shell py-2">
       <a class="navbar-brand fw-bold text-accent" href="{% url 'expense_mgt:home' %}">Expense MGT</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navCollapse" aria-controls="navCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,6 +182,12 @@
           {% endif %}
         </ul>
         <div class="d-flex align-items-center gap-2">
+          <button id="themeToggle" type="button" class="btn btn-sm btn-outline-soft" aria-label="切換背景主題" title="切換背景主題">
+            <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M8 12.5a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9zm0 1.5a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/>
+              <path d="M8 0a.5.5 0 0 1 .5.5V2a.5.5 0 0 1-1 0V.5A.5.5 0 0 1 8 0zm0 14a.5.5 0 0 1 .5.5V16a.5.5 0 0 1-1 0v-1.5A.5.5 0 0 1 8 14zm8-6a.5.5 0 0 1-.5.5H14a.5.5 0 0 1 0-1h1.5a.5.5 0 0 1 .5.5zM2 8a.5.5 0 0 1-.5.5H0a.5.5 0 0 1 0-1h1.5A.5.5 0 0 1 2 8zm11.657-5.657a.5.5 0 0 1 0 .707L12.95 4.757a.5.5 0 0 1-.707-.707l.707-.707a.5.5 0 0 1 .707 0zM3.757 12.243a.5.5 0 0 1 0 .707l-.707.707a.5.5 0 1 1-.707-.707l.707-.707a.5.5 0 0 1 .707 0zM12.243 12.243a.5.5 0 0 1 .707 0l.707.707a.5.5 0 0 1-.707.707l-.707-.707a.5.5 0 0 1 0-.707zM4.05 4.757a.5.5 0 0 1 .707-.707l-.707-.707a.5.5 0 0 1 .707-.707l.707.707a.5.5 0 0 1-.707.707z"/>
+            </svg>
+          </button>
           {% if user.is_authenticated %}
             <span class="text-secondary small">{{ user.username }}</span>
             <form action="{% url 'expense_mgt:logout' %}" method="post" class="m-0">
@@ -127,6 +215,34 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    (function () {
+      const storageKey = 'expense-mgt-bg-theme';
+      const root = document.documentElement;
+      const toggleButton = document.getElementById('themeToggle');
+
+      function applyTheme(theme) {
+        const nextTheme = theme === 'light' ? 'light' : 'deep';
+        root.setAttribute('data-bg-theme', nextTheme);
+        root.setAttribute('data-bs-theme', nextTheme === 'light' ? 'light' : 'dark');
+        if (toggleButton) {
+          toggleButton.title = nextTheme === 'light' ? '切換到深色背景' : '切換到白色背景';
+          toggleButton.setAttribute('aria-label', toggleButton.title);
+        }
+        localStorage.setItem(storageKey, nextTheme);
+      }
+
+      const savedTheme = localStorage.getItem(storageKey);
+      applyTheme(savedTheme || root.getAttribute('data-bg-theme') || 'deep');
+
+      if (toggleButton) {
+        toggleButton.addEventListener('click', function () {
+          const currentTheme = root.getAttribute('data-bg-theme') === 'light' ? 'light' : 'deep';
+          applyTheme(currentTheme === 'light' ? 'deep' : 'light');
+        });
+      }
+    })();
+  </script>
   {% block extra_js %}{% endblock %}
 </body>
 </html>

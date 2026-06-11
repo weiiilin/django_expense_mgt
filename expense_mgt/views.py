@@ -28,8 +28,13 @@ def register(request):
         form = CustomRegistrationForm()
     return render(request, 'register.html', {'form': form})
 
+def test_api(request):
+    # 這裡可以放一些測試用的 API 呼叫或資料處理邏輯
+    if request.method == 'POST':
+        return JsonResponse({'message': '這是一個測試 API 回應！'}) # type: ignore
 
 @login_required(login_url='expense_mgt:login')
+
 def home(request):
     now = timezone.now()
     period = request.GET.get('period')
