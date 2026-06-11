@@ -55,14 +55,14 @@ git init
 git add .
 git commit -m "Initial commit"
 git branch -M main
-git remote add origin <你的 GitHub Repository URL>
+git remote add origin https://github.com/weiiilin/django_expense_mgt
 git push -u origin main
 ```
 
 3. 將 GitHub 專案 clone 到你的模擬環境。
 
 ```bash
-git clone <你的 GitHub Repository URL>
+git clone https://github.com/weiiilin/django_expense_mgt
 cd django_expense_mgt
 ```
 
