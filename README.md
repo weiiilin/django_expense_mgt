@@ -96,6 +96,7 @@ DELETE /api/expenses/<id>/
 ## 注意事項
 
 - API 採用登入後的 Session 驗證，也同時保留 Basic Auth，方便 Postman 測試。
+- `web` 服務已掛載專案原始碼到容器內，修改程式後通常不需要重建映像，Django 會自動重載。
 - 預設 Docker Compose 已內建 MySQL 連線環境變數。
 - 若要建立後台管理員，可以在容器中執行 `python manage.py createsuperuser`。
 
